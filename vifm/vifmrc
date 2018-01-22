@@ -1,0 +1,50 @@
+colorscheme Molokai
+
+set vicmd=nvim
+set trash
+set history=100
+set nofollowlinks
+set fastrun
+set sortnumbers
+set undolevels=100
+set novimhelp
+set noiec
+set norunexec
+set confirm=permdelete
+set timefmt=%d.%m.%y\ %H:%M
+set wildmenu
+set ignorecase
+set smartcase
+set hlsearch
+set incsearch
+set scrolloff=4
+set slowfs=curlftpfs
+set statusline="  %t%= %A %10u:%-7g %15s %20d  "
+
+" The following macros can be used in a command
+" %a is replaced with the user arguments.
+" %c the current file under the cursor.
+" %C the current file under the cursor in the other directory.
+" %f the current selected file, or files.
+" %F the current selected file, or files in the other directory.
+" %b same as %f %F.
+" %d the current directory name.
+" %D the other window directory name.
+" %m run the command in a menu window
+
+command! zip zip -r %f.zip %f
+command! tar tar -pczf %f.tar.gz %f
+command! open open %f
+command! vim vim %f
+command! make !!make %a
+command! reload :write | restart
+command! git git %a %m
+
+filetype *.pdf okular
+filetype *.mp3,*.mp4,*.mkv,*.mov mplayer
+filetype *.jpg,*.jpeg,*.png eog
+
+filetype * nvim
+nnoremap I cw<c-a>
+nnoremap cc cw<c-u>
+nnoremap A cw<c-w>

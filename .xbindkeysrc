@@ -1,0 +1,20 @@
+"ponymix increase 5"
+  XF86AudioRaiseVolume
+
+"ponymix decrease 5"
+  XF86AudioLowerVolume
+
+"ponymix toggle"
+  XF86AudioMute
+
+"$HOME/dotfiles/brightnessctl /sys/class/backlight/intel_backlight 500 up"
+  XF86MonBrightnessUp
+
+"$HOME/dotfiles/brightnessctl /sys/class/backlight/intel_backlight 500 down"
+  XF86MonBrightnessDown
+
+"$HOME/dotfiles/brightnessctl /sys/class/leds/smc::kbd_backlight 40 up"
+  XF86KbdBrightnessUp
+
+"$HOME/dotfiles/brightnessctl /sys/class/leds/smc::kbd_backlight 40 down"
+  XF86KbdBrightnessDown

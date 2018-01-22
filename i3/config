@@ -1,0 +1,144 @@
+set $m Mod4
+
+font pango:"Droid Sans" "Regular" 14
+
+for_window [class="^.*"] border pixel 1
+
+# use Mouse+$m to drag floating windows to their wanted position
+floating_modifier $m
+
+# start a terminal
+bindsym $m+Return exec termite -e /usr/bin/zsh
+bindsym $m+space exec google-chrome-stable --force-device-scale-factor=1.8 --high-dpi-support=1
+#bindsym $m+space exec firefox
+
+# kill focused window
+bindsym $m+q kill
+
+
+# Focus
+bindsym $m+Left focus left
+bindsym $m+Down focus down
+bindsym $m+Up focus up
+bindsym $m+Right focus right
+
+
+# splitting
+bindsym $m+h split horizontal
+bindsym $m+v split vertical
+
+# enter fullscreen mode for the focused container
+bindsym $m+f fullscreen toggle
+
+# switch to workspace
+bindsym $m+1 workspace number 1
+bindsym $m+2 workspace number 2
+bindsym $m+3 workspace number 3
+bindsym $m+4 workspace number 4
+bindsym $m+5 workspace number 5
+bindsym $m+6 workspace number 6
+bindsym $m+7 workspace number 7
+bindsym $m+8 workspace number 8
+bindsym $m+9 workspace number 9
+bindsym $m+0 workspace number 10
+
+# move focused container to workspace
+bindsym $m+Shift+1 move container to workspace 1
+bindsym $m+Shift+2 move container to workspace 2
+bindsym $m+Shift+3 move container to workspace 3
+bindsym $m+Shift+4 move container to workspace 4
+bindsym $m+Shift+5 move container to workspace 5
+bindsym $m+Shift+6 move container to workspace 6
+bindsym $m+Shift+7 move container to workspace 7
+bindsym $m+Shift+8 move container to workspace 8
+bindsym $m+Shift+9 move container to workspace 9
+bindsym $m+Shift+0 move container to workspace 10
+
+
+bindsym $m+r exec --no-startup-id i3-input -F 'rename workspace to "%s"' -P 'Rename Workspace: ' -f "pango:Droid Sans 16"
+
+# reload the configuration file
+bindsym $m+Shift+c reload
+bindsym $m+Shift+r restart
+
+# applications
+bindsym $m+d exec dmenu_run -fn "Droid Sans:regular:size=16"
+bindsym $m+l exec i3lock --color=00B7FF -e -u
+bindsym $m+k exec "i3lock --color=00B7FF -e -u && systemctl suspend"
+
+# exit i3 (logs you out of your X session)
+bindsym $m+Shift+e exec "i3-msg exit"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym $left       resize shrink width 5 px or 5 ppt
+        bindsym $down       resize grow height 5 px or 5 ppt
+        bindsym $up         resize shrink height 5 px or 5 ppt
+        bindsym $right      resize grow width 5 px or 5 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left        resize shrink width 5 px or 5 ppt
+        bindsym Down        resize grow height 5 px or 5 ppt
+        bindsym Up          resize shrink height 5 px or 5 ppt
+        bindsym Right       resize grow width 5 px or 5 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $m+s mode "resize"
+
+# move window and workspace
+mode "move" {
+        # move containers
+        bindsym Left move left
+        bindsym Down move down
+        bindsym Up move up
+        bindsym Right move right
+
+        # move workspaces to outputs
+        bindsym Shift+Left move workspace to output left
+        bindsym Shift+Down move workspace to output down
+        bindsym Shift+Up move workspace to output up
+        bindsym Shift+Right move workspace to output right
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $m+m mode "move"
+
+# status
+bar {
+  status_command i3status
+  tray_output primary
+  position top
+  separator_symbol " | "
+  colors {
+    background #1B1D1E
+    separator #303030
+    focused_workspace #00B7FF #00B7FF #FFFFFF
+    inactive_workspace #1B1D1E #1B1D1E #FFFFFF
+    binding_mode #A6E22E #A6E22E #101010
+  }
+}
+
+
+# class                 border  backgr. text    indicator
+client.focused          #4c7899 #00B7FF #ffffff #FFD105
+client.focused_inactive #333333 #303030 #ffffff #484e50
+client.unfocused        #333333 #222222 #888888 #292d2e
+client.urgent           #2f343a #FFD105 #ffffff #FFD105
+client.placeholder      #000000 #0c0c0c #ffffff #000000
+
+client.background       #ffffff
+
+bindsym $m+Shift+f floating toggle

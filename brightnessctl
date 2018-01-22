@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# ./display-brightness /sys/class/backlight/intel_backlight 100 up
+# ./display-brightness /sys/class/backlight/intel_backlight 100 down
+
+BACKLIGHT=$1
+STEPSIZE=$2
+DIRECTION=$3
+
+CURRENT=`cat $BACKLIGHT/brightness`
+MAX=`cat $BACKLIGHT/max_brightness`
+
+# brightness up
+if [ "$DIRECTION" = "up" ]; then
+	NEW=`expr $CURRENT + $STEPSIZE`
+	if [ "$NEW" -gt "$MAX" ]; then
+		echo $MAX > $BACKLIGHT/brightness
+		exit
+	fi
+	echo $NEW > $BACKLIGHT/brightness
+	exit
+fi
+
+# brightness down
+if [ "$DIRECTION" = "down" ]; then
+	NEW=`expr $CURRENT - $STEPSIZE`
+	if [ "$NEW" -lt 0 ]; then
+		echo 0 > $BACKLIGHT/brightness
+		exit
+	fi
+	echo $NEW > $BACKLIGHT/brightness
+	exit
+fi

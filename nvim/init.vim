@@ -2,24 +2,32 @@ set nocompatible
 filetype off
 
 call plug#begin('~/.config/nvim')
-
-Plug 'funkhousr/molokai'
+Plug 'tfkhsr/nomolo'
 Plug 'airblade/vim-gitgutter'
 Plug 'benekastah/neomake'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'fatih/vim-go'
-Plug 'prettier/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql', 'html'] }
-Plug 'junegunn/vim-easy-align'
-Plug 'jamessan/vim-gnupg'
+Plug 'tpope/vim-surround'
+Plug 'scrooloose/nerdtree'
+Plug 'Raimondi/delimitMate'
+Plug 'chrisbra/Colorizer'
+Plug 'godlygeek/tabular'
 
+" go
+Plug 'fatih/vim-go'
+Plug 'zchee/deoplete-go', { 'do': 'make'}
+
+" web
+Plug 'prettier/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
+Plug 'pangloss/vim-javascript'
+
+" rails
+Plug 'tpope/vim-rails'
 call plug#end()
 
 " theme
 filetype plugin indent on
 syntax enable
-set t_Co=256
-let g:rehash256 = 1
-colorscheme molokai
+colorscheme nomolo
 
 " appearance
 set number
@@ -27,11 +35,13 @@ set relativenumber
 set cursorline
 set list
 set listchars=tab:▸\ ,eol:¬
+set fillchars+=vert:\ 
 set tabstop=2
 set shiftwidth=2
-set expandtab
+set noexpandtab
 set scrolloff=5
 set foldmethod=marker
+set autoindent
 
 " background
 set mouse=a
@@ -56,11 +66,18 @@ set statusline=%t\ %=%{&fenc}\ %y
 
 " configs
 nnoremap gb :ls<CR>:b<Space>
+nnoremap <Space> :bn<CR>
 nmap ; :
 nnoremap zz za
+map <C-f> :NERDTreeToggle<CR>
+let g:delimitMate_expand_cr = 2
 
 " autcomplete
 let g:deoplete#enable_at_startup = 1
+
+" nerdtree
+let NERDTreeQuitOnOpen = 1
+let NERDTreeMinimalUI = 1
 
 " linting
 let g:neomake_verbose = 0
@@ -73,11 +90,47 @@ let g:go_highlight_structs = 1
 let g:go_highlight_interfaces = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
+let g:go_metalinter_autosave = 0
+let g:go_metalinter_enabled = []
 
 " js
 let g:prettier#autoformat = 0
 let g:prettier#config#print_width = 80
 let g:prettier#config#bracket_spacing = 'true'
+
+" Restore cursor position, window position, and last search after running a
+" command.
+function! Preserve(command)
+  " Save the last search.
+  let search = @/
+
+  " Save the current cursor position.
+  let cursor_position = getpos('.')
+
+  " Save the current window position.
+  normal! H
+  let window_position = getpos('.')
+  call setpos('.', cursor_position)
+
+  " Execute the command.
+  execute a:command
+
+  " Restore the last search.
+  let @/ = search
+
+  " Restore the previous window position.
+  call setpos('.', window_position)
+  normal! zt
+
+  " Restore the previous cursor position.
+  call setpos('.', cursor_position)
+endfunction
+
+function! SynStack()
+	echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"
+endfunc
 
 " autocommands
 autocmd! BufReadPost,BufWritePost * Neomake
@@ -85,3 +138,6 @@ autocmd FileType tex setlocal spell spelllang=en_gb
 autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4
 autocmd Filetype c setlocal foldmethod=syntax foldnestmax=1
 autocmd BufWritePre *.js,*.jsx,*.json,*.css,*.scss,*.less,*.graphql PrettierAsync
+autocmd BufWritePre *.hml HairFmt
+autocmd BufWritePre *.html call Preserve('normal gg=G')
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif

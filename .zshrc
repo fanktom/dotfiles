@@ -1,21 +1,19 @@
-# path
-export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
-
 # start ssh-agent if not running
-if ! pgrep -u $USER ssh-agent > /dev/null; then
-  ssh-agent > ~/.ssh-agent
-  eval $(<~/.ssh-agent) >/dev/null
-  ssh-add ~/.ssh/tommy
-fi
-# load ssh-agent variables if running
 if [[ "$SSH_AGENT_PID" == "" ]]; then
-  eval $(<~/.ssh-agent) >/dev/null
+		eval `ssh-agent`
+		ssh-add ~/.ssh/tommy
 fi
 
 # oh-my-zsh
 export ZSH=/home/tommy/.oh-my-zsh
 ZSH_THEME="robbyrussell"
 source $ZSH/oh-my-zsh.sh
+
+# ruby
+export PATH=/home/tommy/.gem/ruby/2.5.0/bin:$PATH
+
+# yarn
+export PATH=/home/tommy/.yarn/bin:$PATH
 
 # last dir
 function cd {
@@ -36,6 +34,8 @@ export TERM=xterm-256color
 
 # config
 export EDITOR='nvim'
+alias e='nvim'
+alias erc='nvim $HOME/.config/nvim/init.vim'
 
 # vifm
 bindkey -s '^f' 'vifm .\n'
@@ -46,7 +46,7 @@ export GTK_THEME=Adapta-Nokto
 export GDK_DPI_SCALE=2
 
 # go
-export PATH=$PATH:~/go/bin
+export PATH=~/go/bin:$PATH
 
 # QT
 QT_STYLE_OVERRIDE=GTK+
@@ -72,12 +72,13 @@ function netctl-stop {
 # displays
 function xrandr-off {
   xrandr --output DP1-1 --off
+  xrandr --output DP1 --off
 }
 function xrandr-top {
   xrandr --output DP1-1 --auto --above eDP1
 }
 function xrandr-mirror { 
-  xrandr --output HDMI2 --auto --same-as eDP1
+  xrandr --output DP1 --auto --same-as eDP1
 }
 
 # sd-card
@@ -89,12 +90,8 @@ function vpnctl {
   sudo systemctl $1 openvpn-client@$2
 }
 
-# radio
-alias radio-frisky='mplayer http://stream2.friskyradio.com/frisky_mp3_hi/;*3'
-alias radio-clubsandwich='mplayer http://fluxfm.hoerradar.de/flux-clubsandwich-mp3-hq'
-alias radio-pure='mplayer http://www.radionetz.de:8000/purefm-bln.mp3'
-alias radio-minimal='mplayer http://stream1.laut.fm/minimalcalling'
-alias radio-smash='mplayer http://uk1.internet-radio.com:8106/;'
-
 # lang
 export LC_ALL="en_US.UTF-8"
+
+# private
+source $HOME/.zshrc-private

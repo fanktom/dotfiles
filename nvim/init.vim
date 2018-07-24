@@ -2,26 +2,26 @@ set nocompatible
 filetype off
 
 call plug#begin('~/.config/nvim')
-Plug 'tfkhsr/nomolo'
-Plug 'airblade/vim-gitgutter'
-Plug 'benekastah/neomake'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'tpope/vim-surround'
-Plug 'scrooloose/nerdtree'
-Plug 'Raimondi/delimitMate'
-Plug 'chrisbra/Colorizer'
-Plug 'godlygeek/tabular'
+Plug 'https://github.com/tfkhsr/nomolo'
+Plug 'https://github.com/airblade/vim-gitgutter'
+Plug 'https://github.com/benekastah/neomake'
+Plug 'https://github.com/Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'https://github.com/tpope/vim-surround'
+Plug 'https://github.com/scrooloose/nerdtree'
+Plug 'https://github.com/Raimondi/delimitMate'
+Plug 'https://github.com/chrisbra/Colorizer'
+Plug 'https://github.com/godlygeek/tabular'
 
 " go
-Plug 'fatih/vim-go'
-Plug 'zchee/deoplete-go', { 'do': 'make'}
+Plug 'https://github.com/fatih/vim-go'
+Plug 'https://github.com/zchee/deoplete-go', { 'do': 'make'}
 
 " web
-Plug 'prettier/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
-Plug 'pangloss/vim-javascript'
+Plug 'https://github.com/prettier/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
+Plug 'https://github.com/pangloss/vim-javascript'
 
 " rails
-Plug 'tpope/vim-rails'
+Plug 'https://github.com/tpope/vim-rails'
 call plug#end()
 
 " theme
@@ -136,6 +136,7 @@ endfunc
 autocmd! BufReadPost,BufWritePost * Neomake
 autocmd FileType tex setlocal spell spelllang=en_gb
 autocmd Filetype python setlocal expandtab tabstop=4 shiftwidth=4
+autocmd Filetype ruby setlocal expandtab tabstop=2 shiftwidth=2
 autocmd Filetype c setlocal foldmethod=syntax foldnestmax=1
 autocmd BufWritePre *.js,*.jsx,*.json,*.css,*.scss,*.less,*.graphql PrettierAsync
 autocmd BufWritePre *.hml HairFmt

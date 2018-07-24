@@ -39,6 +39,7 @@ alias erc='nvim $HOME/.config/nvim/init.vim'
 
 # vifm
 bindkey -s '^f' 'vifm .\n'
+bindkey -s '^e' '^x^e'
 
 # env
 export GTK2_RC_FILES=$HOME/.gtkrc-2.0
